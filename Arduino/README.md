@@ -11,12 +11,12 @@ Note that this library will support ROS communication over UART and TCP.  By def
 # Installation
 
 * Follow the instructions at the link above to install the rosserial ROS package and Arduino SDK.
-* Generate the rosserial library and copy it to the <sketches>/libraries folder.
+* Generate the rosserial library and copy it to the <<sketches>>/libraries folder.
 * Copy the updated "ros2.h" header file to the ros_lib libraries folder.  This updated header file will allow the ESP8266 and ESP32 to use the UART rather than forcing it to TCP.  See issues section below.
 * Open the "ESP_ROS_Motor_Control_v01.ino" sketch file in the Arduino SDK.
 * Edit the file and change the SSID and WiFi password for your local WiFi network.  Update the IP address of the host where the ros core/master is running.
 * Make sure the ESP8266 pins to the motor drivers are correct. By default they are set as: A = Power/PWM, B = Direction
-* By default "ROSSERIAL_ARDUINO_TCP" is defined, so TCP communication will be used.  Comment out this #define line if you want to use the UART.
+* "ROSSERIAL_ARDUINO_TCP" is currently defined in the sketch, so TCP communication will be used.  Comment out this #define line if you want to use the UART.
 * Upload the sketch to the ESP8266.  The sketch will automatically connect to WiFi network, start a ROS node, and subscribe to the "oavg_motor_cmd/cmd_vel" topic.
 * You can check this by going to another ROS node and typing "rostopic list".  You should see the "oavg_motor_cmd/cmd_vel" topic listed.
 * You should now be able to send "geometry_msgs::Twist" messages to the "oavg_motor_cmd/cmd_vel" topic and see your motors move!

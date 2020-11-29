@@ -1,4 +1,4 @@
-#Ottawa Autonomous Vehicle Group (OAVG) Snowplow Project
+# Ottawa Autonomous Vehicle Group (OAVG) Snowplow Project
 
 ![alt text](https://github.com/jmidwint/oavg_snowplow/blob/master/images/oavg_snowplow.jpg "OAVG Snowplow")
 

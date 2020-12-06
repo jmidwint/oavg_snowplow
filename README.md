@@ -6,3 +6,6 @@ Welcome to the OAVG Snowplow Project github page!  For overview information abou
 
 More information is also available in the references folder.
 
+Google drive folder for VAUL-Ottawa collaboration:<https://drive.google.com/drive/folders/1IxbFp0O36WBp_8h7FBDaFQzy7UdTyOwr?usp=sharing>
+
+

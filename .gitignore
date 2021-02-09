@@ -1,3 +1,8 @@
+# Catkin workspace build files
+#
+simulator/catkin_ws/build
+simulator/catkin_ws/devel
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

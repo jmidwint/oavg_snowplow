@@ -50,6 +50,21 @@
     <!---->
   </link>
 
+    <link name="inertial_base_link">
+
+
+      <xacro:default_inertial mass="10"/>
+
+    </link>
+    <joint name="inertial_base_link_joint" type="fixed">
+      <axis xyz="0 0 0" rpy="0 0 0" />
+<!--      <parent link="${prefix}_base"/> -->
+      <parent link="base_link"/>
+
+      <child link="inertial_base_link"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+    </joint>
+
   <xacro:macro name="wheel" params="prefix suffix reflect reflect2">
 
     <link name="${prefix}_${suffix}_wheel">
@@ -333,14 +348,42 @@
     <plugin name="oavg_gps_sim" filename="libhector_gazebo_ros_gps.so">
       <alwaysOn>1</alwaysOn>
       <updateRate>10.0</updateRate>
+      <robotNamespace>oavg</robotNamespace>
       <bodyName>base_link</bodyName>
       <topicName>fix</topicName>
       <velocityTopicName>fix_velocity</velocityTopicName>
+ <!-- default      
+      <referenceLatitude>49.9</referenceLatitude>
+      <referenceLongitude>8.9</referenceLongitude>
+-->
+      <referenceHeading>90.0</referenceHeading>
+      <referenceLatitude>45.407869</referenceLatitude>
+      <referenceLongitude>-75.719062</referenceLongitude>
+<!--
       <drift>5.0 5.0 5.0</drift>
       <gaussianNoise>0.1 0.1 0.1</gaussianNoise>
       <velocityDrift>0 0 0</velocityDrift>
       <velocityGaussianNoise>0.1 0.1 0.1</velocityGaussianNoise>
+-->
+      <drift>0.0 0.0 0.0</drift>
+      <gaussianNoise>0.0 0.0 0.0</gaussianNoise>
+      <velocityDrift>0 0 0</velocityDrift>
+      <velocityGaussianNoise>0.0 0.0 0.0</velocityGaussianNoise>
     </plugin>
+
+    <plugin name="oavg_mag_sim" filename="libhector_gazebo_ros_magnetic.so">
+      <alwaysOn>1</alwaysOn>
+      <updateRate>10.0</updateRate>
+      <robotNamespace>oavg</robotNamespace>
+      <bodyName>base_link</bodyName>
+      <topicName>magnetic</topicName>
+      <referenceHeading>90.0</referenceHeading>
+
+
+
+    </plugin>
+
+
   </gazebo>
 
 </robot>

@@ -7,6 +7,7 @@ from geometry_msgs.msg import Twist, Vector3Stamped
 import math
 from enum import Enum
 import csv
+import time
 
 class NavState(Enum):
      INIT = 1
@@ -43,7 +44,7 @@ target_long_rad = target_long_deg * math.pi / 180
 
 target_x = target_y = target_bearing = target_distance = target_err = 0
 
-max_speed = 0.8  #1.0  #0.7
+max_speed = 1.0  #0.8  #1.0  #0.7
 min_speed = 0.2  #0.3
 
 min_target_distance = 0.3
@@ -103,7 +104,6 @@ def run_state(current_state):
     global target_bearing, target_distance, target_err
     global robot_roll, robot_pitch, robot_yaw, robot_speed
     global command
-    target_err = 0
 
     print ("State: " + current_state.name)
 
@@ -179,9 +179,9 @@ def run_state(current_state):
     return next_state
 
 
-def get_waypoints():
+def get_waypoints(path_file):
     global latlon_data
-    newList = read ("path.file")  # read path file 
+    newList = read (path_file)  # read path file 
     print(newList)
     latlon_data = newList
     
@@ -211,7 +211,9 @@ rospy.init_node('nav_robot')
 #sub = rospy.Subscriber ('/oavg_diff_drive_controller/odom', Odometry, get_rotation)
 sub = rospy.Subscriber ('/oavg/fix', NavSatFix, get_gps_position)
 sub = rospy.Subscriber ('/oavg/magnetic', Vector3Stamped, get_rotation)
-pub = rospy.Publisher('/oavg_diff_drive_controller/cmd_vel', Twist, queue_size=1)
+#pub = rospy.Publisher('/oavg_diff_drive_controller/cmd_vel', Twist, queue_size=1)
+pub = rospy.Publisher('/oavg/diff_drive_controller/cmd_vel', Twist, queue_size=1)
+
 #r = rospy.Rate(10)
 r = rospy.Rate(10)
 command =Twist()
@@ -224,7 +226,9 @@ current_state = NavState.INIT
 
 latlon_data = []
 
-get_waypoints()
+path_file = "path.file"
+#path_file = "path_square.file"
+get_waypoints(path_file)
 
 print("Latlon data: ")
 print(latlon_data)
@@ -235,6 +239,13 @@ target_num = 0
 print("Num rows: " + str(num_targets))
 for row in latlon_data:
     print("lat: " + str(row[0]) + " lon: " + str(row[1]))
+
+# Wait for a bit to make sure we get some sensor data
+#time.sleep(0.2)
+
+start_time = time.time()
+start_time_str = time.strftime("%H:%M:%S", time.localtime())
+print("Start time: {}".format(start_time_str))
 
 while not rospy.is_shutdown():
     #quat = quaternion_from_euler (roll, pitch,yaw)
@@ -247,3 +258,13 @@ while not rospy.is_shutdown():
 
     pub.publish(command)
     r.sleep()
+
+print ("State: " + current_state.name)
+
+end_time = time.time()
+end_time_str = time.strftime("%H:%M:%S", time.localtime())
+duration = end_time-start_time
+duration_str = time.strftime('%H:%M:%S', time.gmtime(duration))
+print("Start time: {}".format(start_time_str))
+print("End timexx: {}".format(end_time_str))
+print("Duration:   {}".format(duration_str))

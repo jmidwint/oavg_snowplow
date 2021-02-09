@@ -5,9 +5,9 @@ import math
 import time
 
 
-def get_waypoints():
+def get_waypoints(path_file):
     global latlon_data
-    newList = read ("path.file")  # read path file 
+    newList = read (path_file)  # read path file 
     print(newList)
     latlon_data = newList
     
@@ -62,7 +62,10 @@ def get_latlon_position (lat_deg, long_deg):
 
 latlon_data = []
 
-get_waypoints()
+path_file = "path.file"
+#path_file = "path_square.file"
+
+get_waypoints(path_file)
 
 print("Latlon data: ")
 print(latlon_data)
@@ -98,4 +101,4 @@ for row in latlon_data:
 
     i = i+1
 
-    time.sleep(0.1)
+    #time.sleep(0.1)

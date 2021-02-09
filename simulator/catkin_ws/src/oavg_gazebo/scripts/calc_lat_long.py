@@ -40,7 +40,19 @@ def calc_lat_lon(brng, d):
   print("lon: " + str(lon2) )
 
 
+# Dump pathList in a file
+import pickle
 
+def write(data, outfile):
+        f = open(outfile, "wb")
+        pickle.dump(data, f)
+        f.close()
+
+def read(filename):
+        f = open(filename,"rb")
+        data = pickle.load(f)
+        f.close()
+        return data
 
 f_read = open('target_xy.csv', 'r')
 reader = csv.reader(f_read)
@@ -53,6 +65,8 @@ for row in xy_data:
 f_write = open('target_latlon.csv', 'wb')
 writer = csv.writer(f_write)
 
+pathList = []
+
 for i in range(len(xy_data)):
   x = float (xy_data[i][0])
   y = float (xy_data[i][1])
@@ -63,6 +77,11 @@ for i in range(len(xy_data)):
   #calc_lat_lon( (i+1)*brng, d)
 
   writer.writerow([latlon_pt['lat'], latlon_pt['lon']])
+  pathList.append([latlon_pt['lat'], latlon_pt['lon']])
+
+write (pathList,"path_square.file")
+newList = read ("path_square.file")  # read path file 
+print(newList)
 
 f_read.close()
 f_write.close()

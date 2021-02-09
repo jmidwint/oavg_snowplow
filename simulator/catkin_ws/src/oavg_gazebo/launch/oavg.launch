@@ -28,7 +28,7 @@
 
   <rosparam command="load"
             file="$(find oavg_description)/config/joints.yaml"
-            ns="oavg_joint_state_controller" />
+            ns="oavg/joint_state_controller" />
 
 <!--
   <rosparam command="load"
@@ -44,19 +44,19 @@
 
   <rosparam command="load"
             file="$(find oavg_description)/config/diffdrive.yaml"
-            ns="oavg_diff_drive_controller" />
+            ns="oavg/diff_drive_controller" />
 
 
   <node name="oavg_controller_spawner" pkg="controller_manager" type="spawner"
-    args="oavg_joint_state_controller
-          oavg_diff_drive_controller
+    args="oavg/joint_state_controller
+          oavg/diff_drive_controller
           --shutdown-timeout 3"/>
 
 <!--          oavg_head_controller  -->
 <!--          r2d2_gripper_controller  -->
 
   <node name="rqt_robot_steering" pkg="rqt_robot_steering" type="rqt_robot_steering">
-    <param name="default_topic" value="/oavg_diff_drive_controller/cmd_vel"/>
+    <param name="default_topic" value="/oavg/diff_drive_controller/cmd_vel"/>
   </node>
 
 </launch>

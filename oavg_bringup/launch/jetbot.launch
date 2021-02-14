@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!--
+    Jetbot launch script.
+-->
+<launch>
+     <param name="/oavg_camera" type="str" value="csi://0" />
+     <param name="/oavg_camera_flip" type="str" value="" />
+     <param name="/oavg_camera_frames_per_second" type="int" value="2" />
+     <param name="/oavg_obstacle_threshold" type="str" value="0.6" />
+     <param name="/oavg_obstacle_detection_model_file" type="str" value="$(find oavg_vision)/model/pylon_20210213_01.onnx" />
+     <param name="/oavg_obstacle_detection_label_file" type="str" value="$(find oavg_vision)/model/labels_20210213_01.txt" />
+
+     <node name="oavg_obstacle_detection" pkg="oavg_vision" type="oavg_obstacle_detection.py" />
+</launch>
